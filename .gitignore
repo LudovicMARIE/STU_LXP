@@ -1,0 +1,33 @@
+# Dossiers générés par Unity (à ne jamais commit)
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Mm]emoryCaptures/
+
+# Fichiers générés par l'IDE (Visual Studio / VS Code / Rider)
+/*.sln
+/*.csproj
+/*.unityproj
+/*.suo
+/*.tmp
+/*.user
+/*.userprefs
+/*.pidb
+/*.booproj
+/*.svd
+/*.pdb
+/*.opendb
+/*.VC.db
+
+# Dossiers cachés de l'IDE
+/.vs/
+/.idea/
+/.vscode/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
