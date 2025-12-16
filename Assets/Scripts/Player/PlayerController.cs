@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;
 
     [Header("References")]
+    [SerializeField] private SwordController weaponController;
     [SerializeField] private Transform weaponPivot;
     [SerializeField] private SpriteRenderer characterSprite;
     
@@ -27,6 +28,9 @@ public class PlayerController : MonoBehaviour
         mainCam = Camera.main;
 
         animator = GetComponentInChildren<Animator>(); 
+
+        if (weaponController == null)
+            weaponController = GetComponentInChildren<SwordController>();
 
         if (moveAction.bindings.Count == 0)
         {
@@ -61,33 +65,22 @@ public class PlayerController : MonoBehaviour
             else characterSprite.flipX = false;
         }
         
-        if (attackAction.WasPressedThisFrame())
+        if (weaponController != null)
         {
-            Attack();
+            // 1. On dit à l'arme de viser la souris
+            weaponController.HandleRotation(mousePos, rb.position);
+
+            // 2. Si on clique, on dit à l'arme d'attaquer
+            if (attackAction.WasPressedThisFrame())
+            {
+                weaponController.TryAttack();
+            }
         }
     }
 
     void FixedUpdate()
     {
         rb.MovePosition(rb.position + movementInput * moveSpeed * Time.fixedDeltaTime);
-        RotateWeapon();
     }
     
-    void RotateWeapon()
-    {
-        if (weaponPivot == null) return;
-        Vector2 lookDir = mousePos - rb.position;
-        float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
-        weaponPivot.rotation = Quaternion.Euler(0, 0, angle);
-
-        Vector3 localScale = Vector3.one;
-        if (angle > 90 || angle < -90) localScale.y = -1f;
-        else localScale.y = 1f;
-        weaponPivot.localScale = localScale;
-    }
-
-    void Attack()
-    {
-        Debug.Log("PAN !");
-    }
 }
