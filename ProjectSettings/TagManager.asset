@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
+<<<<<<< Updated upstream
   tags: []
+=======
+  tags:
+  - Enemy
+>>>>>>> Stashed changes
   layers:
   - Default
   - TransparentFX
@@ -41,6 +46,7 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+<<<<<<< Updated upstream
   - name: Sol
     uniqueID: 3584131351
     locked: 0
@@ -59,5 +65,7 @@ TagManager:
   - name: UI
     uniqueID: 658452415
     locked: 0
+=======
+>>>>>>> Stashed changes
   m_RenderingLayers:
   - Default
