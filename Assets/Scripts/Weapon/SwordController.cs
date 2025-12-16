@@ -11,6 +11,7 @@ public class SwordController : MonoBehaviour
     [Header("References")]
     [SerializeField] private Transform swordContainer; // Glisse l'objet "SwordContainer"
     [SerializeField] private Collider2D swordCollider; // Glisse l'objet "SwordSprite" (qui a le collider)
+    [SerializeField] private SpriteRenderer swordRenderer;
 
     private bool isAttacking = false;
     private float lastAttackTime = -999f;
@@ -20,6 +21,7 @@ public class SwordController : MonoBehaviour
     {
         // Sécurité : on s'assure que le collider est éteint au début
         if(swordCollider != null) swordCollider.enabled = false;
+        if(swordRenderer != null) swordRenderer.enabled = false;
     }
 
     // Appelée par le PlayerController à chaque frame
@@ -57,11 +59,12 @@ public class SwordController : MonoBehaviour
 
         // 1. Activer la hitbox
         if(swordCollider != null) swordCollider.enabled = true;
+        if(swordRenderer != null) swordRenderer.enabled = true;
 
         // 2. Animation procédurale (Arc de cercle)
         // On part d'un peu en haut (45 deg) pour aller vers le bas (-45 deg) par rapport à la souris
-        float startAngle = 45f;
-        float endAngle = -45f;
+        float startAngle = 70f;
+        float endAngle = -70f;
         float timer = 0f;
 
         Quaternion baseRot = transform.rotation;
@@ -82,6 +85,7 @@ public class SwordController : MonoBehaviour
 
         // 3. Reset
         if(swordCollider != null) swordCollider.enabled = false;
+        if(swordRenderer != null) swordRenderer.enabled = false;
         swordContainer.localRotation = Quaternion.identity; // Remise à zéro
         isAttacking = false;
     }
