@@ -86,21 +86,24 @@ public class SwordController : MonoBehaviour
         // 3. Reset
         if(swordCollider != null) swordCollider.enabled = false;
         if(swordRenderer != null) swordRenderer.enabled = false;
-        swordContainer.localRotation = Quaternion.identity; // Remise à zéro
+        swordContainer.localRotation = Quaternion.identity;
         isAttacking = false;
     }
 
     // Détection des coups
     private void OnTriggerEnter2D(Collider2D other)
     {
+        // Ignore Player
+        if (other.CompareTag("Player")) return;
+
         if (other.CompareTag("Enemy"))
         {
-            // C'est ici qu'on prévient l'autre développeur
-            // Il devra avoir un script avec une méthode publique : TakeDamage(int damage)
-            Debug.Log($"Touché ennemi : {other.name} pour {damage} dégâts");
-            
-            // Exemple d'interaction future (ne pas copier si le script n'existe pas) :
-            // other.GetComponent<EnemyHealth>()?.TakeDamage(damage);
+            EnemyController enemy = other.GetComponent<EnemyController>();
+
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage); 
+            }
         }
     }
 }
