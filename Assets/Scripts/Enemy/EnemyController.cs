@@ -52,12 +52,7 @@ public class EnemyController : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            Die();
+            Destroy(gameObject);
         }
-    }
-
-    private void Die()
-    {
-        Destroy(gameObject);
     }
 }
