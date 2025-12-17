@@ -56,6 +56,20 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            PlayerController playerScript = collision.gameObject.GetComponent<PlayerController>();
+            
+            if (playerScript != null)
+            {
+                // On cast 'damage' en int car ta variable est un float mais TakeDamage attend un int
+                playerScript.TakeDamage((int)damage);
+            }
+        }
+    }
+
     private void Die()
     {
         Destroy(gameObject);

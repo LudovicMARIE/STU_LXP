@@ -5,6 +5,14 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Stats")]
     [SerializeField] private float moveSpeed = 5f;
+    [Header("Santé Joueur")]
+    [SerializeField] private int maxHealth = 20;
+    private int currentHealth;
+    
+    // Timer pour l'invincibilité
+    private bool isInvincible = false;
+    [SerializeField] private float invincibilityDuration = 1.0f; 
+    private float invincibilityTimer;
 
     [Header("References")]
     [SerializeField] private SwordController weaponController;
@@ -26,8 +34,11 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         mainCam = Camera.main;
+        currentHealth = maxHealth;
 
         animator = GetComponentInChildren<Animator>(); 
+        if (characterSprite == null) 
+            characterSprite = GetComponentInChildren<SpriteRenderer>();
 
         if (weaponController == null)
             weaponController = GetComponentInChildren<SwordController>();
@@ -50,6 +61,28 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         movementInput = moveAction.ReadValue<Vector2>();
+
+        if (isInvincible)
+        {
+            invincibilityTimer -= Time.deltaTime;
+
+            // Effet Clignotement Rouge / Blanc rapide
+            if (characterSprite != null)
+            {
+                float flashSpeed = 20f; // Vitesse du flash
+                if (Mathf.Sin(Time.time * flashSpeed) > 0)
+                    characterSprite.color = Color.red;
+                else
+                    characterSprite.color = Color.white;
+            }
+
+            if (invincibilityTimer <= 0)
+            {
+                isInvincible = false;
+                if (characterSprite != null) 
+                    characterSprite.color = Color.white;
+            }
+        }
 
         if (animator != null)
         {
@@ -81,6 +114,31 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         rb.MovePosition(rb.position + movementInput * moveSpeed * Time.fixedDeltaTime);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if (isInvincible) return;
+
+        currentHealth -= damage;
+        // Debug.Log($"Joueur touché. PV restants : {currentHealth}");
+
+        isInvincible = true;
+        invincibilityTimer = invincibilityDuration;
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        Debug.Log("💀 GAME OVER");
+
+        // temp game stop
+        gameObject.SetActive(false); 
+        Time.timeScale = 0;
     }
     
 }
