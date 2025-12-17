@@ -3,12 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-<<<<<<< Updated upstream
-  tags: []
-=======
   tags:
   - Enemy
->>>>>>> Stashed changes
   layers:
   - Default
   - TransparentFX
@@ -46,26 +42,23 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-<<<<<<< Updated upstream
   - name: Sol
-    uniqueID: 3584131351
+    uniqueID: 1744476859
     locked: 0
   - name: Mur
-    uniqueID: 440178957
+    uniqueID: 2641750757
     locked: 0
   - name: Enemy
-    uniqueID: 2860327237
+    uniqueID: 105865807
     locked: 0
   - name: Player
-    uniqueID: 3883034637
+    uniqueID: 3696021891
     locked: 0
   - name: Projectile
-    uniqueID: 1498162521
+    uniqueID: 847435645
     locked: 0
   - name: UI
-    uniqueID: 658452415
+    uniqueID: 4004777511
     locked: 0
-=======
->>>>>>> Stashed changes
   m_RenderingLayers:
   - Default
