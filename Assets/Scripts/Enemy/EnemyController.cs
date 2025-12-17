@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    [Header("Stats")]
     public float speed;
     public float maxHealth;
     public float currentHealth;
     public bool isDead;
     public float damage;
-
-
+    
     public GameObject player;
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rb;
@@ -53,6 +53,19 @@ public class EnemyController : MonoBehaviour
         if (currentHealth <= 0)
         {
             Die();
+        }
+    }
+    
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            PlayerController playerScript = collision.gameObject.GetComponent<PlayerController>();
+            
+            if (playerScript != null)
+            {
+                playerScript.TakeDamage((int)damage);
+            }
         }
     }
 

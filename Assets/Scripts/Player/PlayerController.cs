@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class PlayerController : MonoBehaviour
     [Header("Santé Joueur")]
     [SerializeField] private int maxHealth = 20;
     private int currentHealth;
+    [Header("Energy")]
+    [SerializeField] private int maxEnergy = 10;
+    private int currentEnergy;
     
     // Timer pour l'invincibilité
     private bool isInvincible = false;
@@ -18,12 +22,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private SwordController weaponController;
     [SerializeField] private Transform weaponPivot;
     [SerializeField] private SpriteRenderer characterSprite;
+    [SerializeField] private GameObject gameOverCanvas;
     
     private Animator animator; 
 
     [Header("Inputs")]
     public InputAction moveAction;
     public InputAction attackAction;
+    
+    [Header("Getters")]
+    public int CurrentHealth => currentHealth;
+    public int MaxHealth => maxHealth;
+    public int CurrentEnergy => currentEnergy;
+    public int MaxEnergy => maxEnergy;
 
     private Rigidbody2D rb;
     private Camera mainCam;
@@ -32,9 +43,11 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        gameOverCanvas.SetActive(false);
         rb = GetComponent<Rigidbody2D>();
         mainCam = Camera.main;
         currentHealth = maxHealth;
+        currentEnergy = maxEnergy;
 
         animator = GetComponentInChildren<Animator>(); 
         if (characterSprite == null) 
@@ -118,6 +131,7 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        Debug.Log("Damage taken : " + damage);
         if (isInvincible) return;
 
         currentHealth -= damage;
@@ -136,9 +150,8 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("💀 GAME OVER");
 
-        // temp game stop
+        gameOverCanvas.SetActive(true);
         gameObject.SetActive(false); 
         Time.timeScale = 0;
     }
-    
 }
