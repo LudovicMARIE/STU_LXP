@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Stats")]
     [SerializeField] private float moveSpeed = 5f;
+    private int enemyKill;
     [Header("Santé Joueur")]
     [SerializeField] private int maxHealth = 20;
     private int currentHealth;
@@ -30,11 +31,17 @@ public class PlayerController : MonoBehaviour
     public InputAction moveAction;
     public InputAction attackAction;
     
-    [Header("Getters")]
+    [Header("Getters/Setters")]
     public int CurrentHealth => currentHealth;
     public int MaxHealth => maxHealth;
     public int CurrentEnergy => currentEnergy;
     public int MaxEnergy => maxEnergy;
+
+    public int EnemyKill
+    {
+        get => enemyKill;
+        set => enemyKill = value;
+    }
 
     private Rigidbody2D rb;
     private Camera mainCam;
@@ -48,6 +55,7 @@ public class PlayerController : MonoBehaviour
         mainCam = Camera.main;
         currentHealth = maxHealth;
         currentEnergy = maxEnergy;
+        enemyKill = 0;
 
         animator = GetComponentInChildren<Animator>(); 
         if (characterSprite == null) 
@@ -131,12 +139,10 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        Debug.Log("Damage taken : " + damage);
         if (isInvincible) return;
 
         currentHealth -= damage;
         DamagePopupManager.Instance.CreatePopup(this.transform.position, damage);
-        // Debug.Log($"Joueur touché. PV restants : {currentHealth}");
 
         isInvincible = true;
         invincibilityTimer = invincibilityDuration;
@@ -149,8 +155,6 @@ public class PlayerController : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log("💀 GAME OVER");
-
         gameOverCanvas.SetActive(true);
         gameObject.SetActive(false); 
         Time.timeScale = 0;

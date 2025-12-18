@@ -6,7 +6,6 @@ public class EnemyController : MonoBehaviour
     public float speed;
     public float maxHealth;
     public float currentHealth;
-    public bool isDead;
     public float damage;
     
     public GameObject player;
@@ -47,9 +46,6 @@ public class EnemyController : MonoBehaviour
     public void TakeDamage(float amount)
     {
         currentHealth -= amount;
-        
-        Debug.Log($"Aie ! L'ennemi a pris {amount} dégâts. Reste : {currentHealth}");
-
         if (currentHealth <= 0)
         {
             Die();
@@ -71,6 +67,12 @@ public class EnemyController : MonoBehaviour
 
     private void Die()
     {
+        PlayerController _playerController = player.GetComponent<PlayerController>();
+        if (_playerController != null)
+            _playerController.EnemyKill += 1;
+        EnemySpawner _enemySpawner = FindObjectOfType<EnemySpawner>();
+        if (_enemySpawner != null)
+            _enemySpawner.OnEnemyKilled();
         Destroy(gameObject);
     }
 }
