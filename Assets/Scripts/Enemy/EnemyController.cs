@@ -48,7 +48,7 @@ public class EnemyController : MonoBehaviour
     {
         currentHealth -= amount;
         
-        Debug.Log($"Aie ! L'ennemi a pris {amount} dégâts. Reste : {currentHealth}");
+        //Debug.Log($"Aie ! L'ennemi a pris {amount} dégâts. Reste : {currentHealth}");
 
         if (currentHealth <= 0)
         {
