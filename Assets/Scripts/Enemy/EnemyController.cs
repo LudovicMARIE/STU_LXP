@@ -37,11 +37,6 @@ public class EnemyController : MonoBehaviour
         if (spriteRenderer != null && Mathf.Abs(direction.x) > 0.01f)
             spriteRenderer.flipX = direction.x < 0f;
     }
-    
-    void Update()
-    {
-        
-    }
 
     public void TakeDamage(float amount)
     {

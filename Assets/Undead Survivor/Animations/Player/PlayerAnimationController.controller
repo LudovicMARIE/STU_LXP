@@ -28,6 +28,20 @@ AnimatorStateMachine:
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: -212582462984791060}
+--- !u!114 &-735285955547766341
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 387750c64aff44c5ba9243622cc1dd86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LoopSoundBehaviour
+  interval: 0.3
+  volume: 1
 --- !u!1102 &-212582462984791060
 AnimatorState:
   serializedVersion: 6
@@ -95,7 +109,8 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 5241061053400056087}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: -735285955547766341}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1

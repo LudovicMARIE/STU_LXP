@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform weaponPivot;
     [SerializeField] private SpriteRenderer characterSprite;
     [SerializeField] private GameObject gameOverCanvas;
+    private PlayerAudio _playerAudio;
     
     private Animator animator; 
 
@@ -52,6 +53,7 @@ public class PlayerController : MonoBehaviour
     {
         gameOverCanvas.SetActive(false);
         rb = GetComponent<Rigidbody2D>();
+        _playerAudio = GetComponent<PlayerAudio>();
         mainCam = Camera.main;
         currentHealth = maxHealth;
         currentEnergy = maxEnergy;
@@ -142,6 +144,7 @@ public class PlayerController : MonoBehaviour
         if (isInvincible) return;
 
         currentHealth -= damage;
+        if(_playerAudio != null) _playerAudio.PlayHurt();
         DamagePopupManager.Instance.CreatePopup(this.transform.position, damage);
 
         isInvincible = true;
@@ -151,12 +154,29 @@ public class PlayerController : MonoBehaviour
         {
             Die();
         }
+        else
+        {
+            if(_playerAudio != null) _playerAudio.PlayHurt();
+        }
     }
 
     private void Die()
-    {
-        gameOverCanvas.SetActive(true);
-        gameObject.SetActive(false); 
-        Time.timeScale = 0;
-    }
+{
+    // 1. Jouer le son (maintenant l'AudioSource restera actif)
+    if(_playerAudio != null) _playerAudio.PlayDeath();
+
+    // 2. Afficher le Game Over
+    gameOverCanvas.SetActive(true);
+
+    // 3. Cacher le joueur visuellement
+    if (characterSprite != null) characterSprite.enabled = false;
+    
+    // 4. Désactiver les collisions (pour ne plus se faire toucher)
+    Collider2D col = GetComponent<Collider2D>();
+    if (col != null) col.enabled = false;
+
+    // 5. Désactiver ce script (pour arrêter les Inputs et l'Update)
+    // Cela va appeler OnDisable() qui coupe vos Inputs Actions proprement
+    this.enabled = false; 
+}
 }

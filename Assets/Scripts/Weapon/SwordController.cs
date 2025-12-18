@@ -12,6 +12,7 @@ public class SwordController : MonoBehaviour
     [SerializeField] private Transform swordContainer; // Glisse l'objet "SwordContainer"
     [SerializeField] private Collider2D swordCollider; // Glisse l'objet "SwordSprite" (qui a le collider)
     [SerializeField] private SpriteRenderer swordRenderer;
+    public PlayerAudio playerAudio;
 
     private bool isAttacking = false;
     private float lastAttackTime = -999f;
@@ -56,6 +57,11 @@ public class SwordController : MonoBehaviour
     {
         isAttacking = true;
         lastAttackTime = Time.time;
+
+        if (playerAudio != null) 
+        {
+            playerAudio.PlaySwing();
+        }
 
         // 1. Activer la hitbox
         if(swordCollider != null) swordCollider.enabled = true;
@@ -104,6 +110,7 @@ public class SwordController : MonoBehaviour
             {
                 enemy.TakeDamage(damage); 
                 DamagePopupManager.Instance.CreatePopup(other.transform.position, damage);
+                if (playerAudio != null) playerAudio.PlayHitImpulse();
             }
         }
     }
