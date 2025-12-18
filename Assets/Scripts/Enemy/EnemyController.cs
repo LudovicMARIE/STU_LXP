@@ -64,7 +64,6 @@ public class EnemyController : MonoBehaviour
             
             if (playerScript != null)
             {
-                // On cast 'damage' en int car ta variable est un float mais TakeDamage attend un int
                 playerScript.TakeDamage((int)damage);
             }
         }

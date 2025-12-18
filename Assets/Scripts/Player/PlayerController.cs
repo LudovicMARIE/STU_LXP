@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     private float invincibilityTimer;
 
     [Header("References")]
-    [SerializeField] private SwordController weaponController;
+    [SerializeField] private SwordController swordController;
     [SerializeField] private Transform weaponPivot;
     [SerializeField] private SpriteRenderer characterSprite;
     
@@ -40,8 +40,8 @@ public class PlayerController : MonoBehaviour
         if (characterSprite == null) 
             characterSprite = GetComponentInChildren<SpriteRenderer>();
 
-        if (weaponController == null)
-            weaponController = GetComponentInChildren<SwordController>();
+        if (swordController == null)
+            swordController = GetComponentInChildren<SwordController>();
 
         if (moveAction.bindings.Count == 0)
         {
@@ -98,15 +98,15 @@ public class PlayerController : MonoBehaviour
             else characterSprite.flipX = false;
         }
         
-        if (weaponController != null)
+        if (swordController != null)
         {
             // 1. On dit à l'arme de viser la souris
-            weaponController.HandleRotation(mousePos, rb.position);
+            swordController.HandleRotation(mousePos, rb.position);
 
             // 2. Si on clique, on dit à l'arme d'attaquer
             if (attackAction.WasPressedThisFrame())
             {
-                weaponController.TryAttack();
+                swordController.TryAttack();
             }
         }
     }
@@ -121,6 +121,7 @@ public class PlayerController : MonoBehaviour
         if (isInvincible) return;
 
         currentHealth -= damage;
+        DamagePopupManager.Instance.CreatePopup(this.transform.position, damage);
         // Debug.Log($"Joueur touché. PV restants : {currentHealth}");
 
         isInvincible = true;
