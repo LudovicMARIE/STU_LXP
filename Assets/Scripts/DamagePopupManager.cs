@@ -22,8 +22,8 @@ public class DamagePopupManager : MonoBehaviour
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
         
-        if (digitSprites.Length != 10)
-            Debug.LogError("ERREUR : Il faut exactement 10 sprites (0-9) dans le tableau !");
+            //if (digitSprites.Length != 10)
+            //Debug.LogError("ERREUR : Il faut exactement 10 sprites (0-9) dans le tableau !");
     }
     public void CreatePopup(Vector3 position, int damageAmount)
     {

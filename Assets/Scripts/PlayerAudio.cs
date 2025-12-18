@@ -49,13 +49,13 @@ public class PlayerAudio : MonoBehaviour
 
     public void PlayDeath()
     {
-        print("Play death sound");
+        //print("Play death sound");
         if (deathSound != null) {
             source.PlayOneShot(deathSound);
         }
         else
         {
-            Debug.LogWarning("Death sound is not assigned in PlayerAudio!");
+            //Debug.LogWarning("Death sound is not assigned in PlayerAudio!");
         }
     }
     

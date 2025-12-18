@@ -17,7 +17,7 @@ public class LoopSoundBehaviour : StateMachineBehaviour
         if (_playerAudio == null)
         {
             _playerAudio = animator.GetComponentInParent<PlayerAudio>();
-            Debug.Log(_playerAudio.name);
+            //Debug.Log(_playerAudio.name);
         }
 
         
