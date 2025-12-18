@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("References")] [SerializeField]
     private SwordController swordController;
-
+    [SerializeField] private KillCounterUI killCounterUI;
     [SerializeField] private Transform weaponPivot;
     [SerializeField] private SpriteRenderer characterSprite;
     [SerializeField] private GameObject gameOverCanvas;
@@ -168,6 +168,13 @@ public class PlayerController : MonoBehaviour
             if (_playerAudio != null) _playerAudio.PlayHurt();
         }
     }
+    
+    public void AddKill()
+    {
+        enemyKill++;
+        if (killCounterUI != null) killCounterUI.SetKills(enemyKill);
+    }
+
 
     private void Die()
     {

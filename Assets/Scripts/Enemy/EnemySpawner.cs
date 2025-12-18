@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -15,13 +16,31 @@ public class EnemySpawner : MonoBehaviour
     private bool isWaveTransitioning = false;
     public int CurrentWave => currentWave; // Ajoute cette ligne pour lire la vague depuis l'extérieur
     
+    [Header("Wave Scaling")]
+    [SerializeField] private int baseWaveEnemies = 5;
+    [SerializeField] private int enemiesIncreasePerWave = 1;
+
+    // Buffs progressifs (raisonnables)
+    [SerializeField] private float healthMultPerWave = 1.08f;  // +8% / wave
+    [SerializeField] private float damageMultPerWave = 1.05f;  // +5% / wave
+    [SerializeField] private float speedMultPerWave  = 1.02f;  // +2% / wave
+
+    // Caps pour éviter l'insurmontable
+    [SerializeField] private float maxHealthMultCap = 3.0f;    // max x3 PV
+    [SerializeField] private float maxDamageMultCap = 2.0f;    // max x2 dmg
+    [SerializeField] private float maxSpeedMultCap  = 1.6f;    // max x1.6 speed
+
+    
+    [Header("References")]
+    [SerializeField] private WaveMessageUI waveText;
+    
     Camera cam;
 
     void Start()
     {
         currentWave = 1;
         enemyAlive = 0;
-        currentWaveEnemie = 5;
+        currentWaveEnemie = baseWaveEnemies;
         cam = Camera.main;
         StartCoroutine(SpawnLoop());
     }
@@ -45,7 +64,13 @@ public class EnemySpawner : MonoBehaviour
 
         Vector2 pos = GetOutsideFOVPosition();
 
-        Instantiate(prefab, pos, Quaternion.identity);
+        GameObject go = Instantiate(prefab, pos, Quaternion.identity);
+
+        EnemyController ec = go.GetComponent<EnemyController>();
+        if (ec != null)
+        {
+            ApplyWaveScaling(ec);
+        }
         enemySpawned++;
         enemyAlive++;
     }
@@ -91,8 +116,27 @@ public class EnemySpawner : MonoBehaviour
     {
         Debug.Log("Starting wave " + currentWave);
         currentWave++;
+        waveText.SetWave(currentWave);
+        waveText.ShowWave(currentWave);
         enemyAlive = 0;
         enemySpawned = 0;
-        currentWaveEnemie += 2;
+        currentWaveEnemie += enemiesIncreasePerWave;
     }
+    
+    private void ApplyWaveScaling(EnemyController enemy)
+    {
+        // wave 1 = pas de buff (mult = 1)
+        int w = Mathf.Max(1, currentWave);
+
+        float healthMult = Mathf.Min(maxHealthMultCap, Mathf.Pow(healthMultPerWave, w - 1));
+        float damageMult = Mathf.Min(maxDamageMultCap, Mathf.Pow(damageMultPerWave, w - 1));
+        float speedMult  = Mathf.Min(maxSpeedMultCap,  Mathf.Pow(speedMultPerWave,  w - 1));
+
+        enemy.maxHealth *= healthMult;
+        enemy.damage    *= damageMult;
+        enemy.speed     *= speedMult;
+
+        enemy.currentHealth = enemy.maxHealth;
+    }
+
 }

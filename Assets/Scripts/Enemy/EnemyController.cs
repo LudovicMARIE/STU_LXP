@@ -65,7 +65,7 @@ public class EnemyController : MonoBehaviour
         GetComponent<EnemyXpDrop>().DropExperience();
         PlayerController _playerController = player.GetComponent<PlayerController>();
         if (_playerController != null)
-            _playerController.EnemyKill += 1;
+            _playerController.AddKill();
         EnemySpawner _enemySpawner = FindObjectOfType<EnemySpawner>();
         if (_enemySpawner != null)
             _enemySpawner.OnEnemyKilled();
