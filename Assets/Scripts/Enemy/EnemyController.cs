@@ -62,6 +62,7 @@ public class EnemyController : MonoBehaviour
 
     private void Die()
     {
+        GetComponent<EnemyXpDrop>().DropExperience();
         PlayerController _playerController = player.GetComponent<PlayerController>();
         if (_playerController != null)
             _playerController.EnemyKill += 1;

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8539441311449814085}
   - component: {fileID: -5969773502493949525}
   - component: {fileID: 2534395648254531317}
+  - component: {fileID: 5041623156986096294}
   m_Layer: 0
   m_Name: Enemy 4
   m_TagString: Enemy
@@ -205,6 +206,18 @@ MonoBehaviour:
   speed: 2
   maxHealth: 15
   currentHealth: 15
-  isDead: 0
   damage: 5
   player: {fileID: 0}
+--- !u!114 &5041623156986096294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137318420762859967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 319c1142711dfb458a8cb31fb835668d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyXpDrop
+  baseXpAmount: 10

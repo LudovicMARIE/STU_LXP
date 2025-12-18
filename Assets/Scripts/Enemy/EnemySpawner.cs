@@ -13,6 +13,7 @@ public class EnemySpawner : MonoBehaviour
     private int currentWave;
     private int currentWaveEnemie;
     private bool isWaveTransitioning = false;
+    public int CurrentWave => currentWave; // Ajoute cette ligne pour lire la vague depuis l'extérieur
     
     Camera cam;
 
