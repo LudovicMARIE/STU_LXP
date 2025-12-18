@@ -153,7 +153,7 @@ MonoBehaviour:
   moveSpeed: 5
   maxHealth: 20
   invincibilityDuration: 1
-  weaponController: {fileID: 0}
+  swordController: {fileID: 939118552}
   weaponPivot: {fileID: 0}
   characterSprite: {fileID: 1544021600}
   moveAction:
