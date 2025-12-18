@@ -103,6 +103,7 @@ public class SwordController : MonoBehaviour
             if (enemy != null)
             {
                 enemy.TakeDamage(damage); 
+                DamagePopupManager.Instance.CreatePopup(other.transform.position, damage);
             }
         }
     }

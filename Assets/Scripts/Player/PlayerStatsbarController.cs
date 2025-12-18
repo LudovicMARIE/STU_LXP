@@ -20,26 +20,31 @@ public class PlayerStatsbarController : MonoBehaviour
 
     private void Start()
     {
-        RefrehhBarsFromPlayer();
+        RefreshBarsFromPlayer();
     }
 
     private void Update()
     {
-        RefrehhBarsFromPlayer();
+        RefreshBarsFromPlayer();
     }
 
-    private void RefrehhBarsFromPlayer()
+    private void RefreshBarsFromPlayer()
+{
+    if (_playerController == null) return;
+
+    float healthRatio = (float)_playerController.CurrentHealth / _playerController.MaxHealth;
+    float energyRatio = (float)_playerController.CurrentEnergy / _playerController.MaxEnergy;
+
+    if (_playerController.CurrentHealth > 0)
     {
-        if (_playerController == null) return;
-
-        healthAmount = (_playerController.CurrentHealth / (float)_playerController.MaxHealth) * 100f;
-        energyAmount = (_playerController.CurrentEnergy / (float)_playerController.MaxEnergy) * 100f;
-
-        healthAmount = Mathf.Clamp(healthAmount, 0f, 100f);
-        energyAmount = Mathf.Clamp(energyAmount, 0f, 100f);
-
-        if (healthBar != null) healthBar.fillAmount = healthAmount / 100f;
-        if (energyBar != null) energyBar.fillAmount = energyAmount / 100f;
+        healthRatio = Mathf.Max(healthRatio, 0.05f); 
     }
+
+    healthRatio = Mathf.Clamp01(healthRatio);
+    energyRatio = Mathf.Clamp01(energyRatio);
+
+    if (healthBar != null) healthBar.fillAmount = healthRatio;
+    if (energyBar != null) energyBar.fillAmount = energyRatio;
+}
 
 }
