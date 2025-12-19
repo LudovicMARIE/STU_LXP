@@ -60,6 +60,9 @@ public class SwordController : MonoBehaviour
 
         if (playerAudio != null) 
         {
+            float pitchBonus = 0.3f / attackDuration; 
+
+            playerAudio.source.pitch = pitchBonus; 
             playerAudio.PlaySwing();
         }
 
@@ -67,8 +70,6 @@ public class SwordController : MonoBehaviour
         if(swordCollider != null) swordCollider.enabled = true;
         if(swordRenderer != null) swordRenderer.enabled = true;
 
-        // 2. Animation procédurale (Arc de cercle)
-        // On part d'un peu en haut (45 deg) pour aller vers le bas (-45 deg) par rapport à la souris
         float startAngle = 70f;
         float endAngle = -70f;
         float timer = 0f;
@@ -94,6 +95,21 @@ public class SwordController : MonoBehaviour
         if(swordRenderer != null) swordRenderer.enabled = false;
         swordContainer.localRotation = Quaternion.identity;
         isAttacking = false;
+    }
+
+    public void UpgradeDamage(int amount)
+    {
+        damage += amount;
+    }
+
+    public void UpgradeAttackSpeed(float multiplier)
+    {
+        attackCooldown *= multiplier;
+
+        attackDuration *= multiplier;
+
+        if (attackCooldown < 0.05f) attackCooldown = 0.05f;
+        if (attackDuration < 0.05f) attackDuration = 0.05f;
     }
 
     // Détection des coups

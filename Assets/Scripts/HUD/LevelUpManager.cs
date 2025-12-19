@@ -75,11 +75,11 @@ public class LevelUpManager : MonoBehaviour
     {
         switch (stat)
         {
-            case StatType.MaxHealth: return "+10 PV Max";
-            case StatType.AttackSpeed: return "+10% Vitesse Attaque";
-            case StatType.Damage: return "+5 Dégâts";
-            case StatType.MoveSpeed: return "+5% Vitesse Course";
-            default: return "Bonus inconnu";
+            case StatType.MaxHealth: return "+10 Max HP";
+            case StatType.AttackSpeed: return "+10% Attack Speed";
+            case StatType.Damage: return "+5 Damage";
+            case StatType.MoveSpeed: return "+5% Move Speed";
+            default: return "Unknown Bonus";
         }
     }
 
@@ -95,25 +95,31 @@ public class LevelUpManager : MonoBehaviour
 
     void ApplyUpgrade(StatType stat)
     {
-        // Ici, vous modifiez les variables de votre PlayerController
-        // Exemple (adaptez les noms de variables à votre script) :
+        if (player == null) return;
+
         switch (stat)
         {
             case StatType.MaxHealth:
-                // player.MaxHealth += 10;
-                // player.Heal(10);
-                Debug.Log("PV Augmentés !");
+                player.UpgradeMaxHealth(10);
+                Debug.Log("PV Max Augmentés !");
                 break;
+
             case StatType.AttackSpeed:
-                // player.attackCooldown *= 0.9f;
+                if (player.GetSword() != null)
+                    player.UpgradeSwordAttackSpeed(0.9f);
+
                 Debug.Log("Vitesse d'attaque augmentée !");
                 break;
+
             case StatType.Damage:
-                // player.damage += 5;
+                if (player.GetSword() != null)
+                    player.UpgradeSwordDamage(5);
+
                 Debug.Log("Dégâts augmentés !");
                 break;
+
             case StatType.MoveSpeed:
-                // player.moveSpeed *= 1.05f;
+                player.UpgradeMoveSpeed(1.1f);
                 Debug.Log("Vitesse de déplacement augmentée !");
                 break;
         }

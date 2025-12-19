@@ -189,7 +189,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.7, y: 0.8}
   m_EdgeRadius: 0
 --- !u!114 &2525634907277529385
 MonoBehaviour:
@@ -207,6 +207,8 @@ MonoBehaviour:
   maxHealth: 12
   currentHealth: 12
   damage: 3
+  itemToDrop: {fileID: 6634299000543204243, guid: fb8d15b4259cd4af9965e84f0b48f010, type: 3}
+  dropChance: 0.05
   player: {fileID: 0}
 --- !u!114 &-5613295451779788663
 MonoBehaviour:

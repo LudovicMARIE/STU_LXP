@@ -7,6 +7,9 @@ public class EnemyController : MonoBehaviour
     public float maxHealth;
     public float currentHealth;
     public float damage;
+    [Header("Loot")]
+    [SerializeField] private GameObject itemToDrop;
+    [Range(0f, 1f)] [SerializeField] private float dropChance = 0.05f;
     
     public GameObject player;
     private SpriteRenderer spriteRenderer;
@@ -69,6 +72,10 @@ public class EnemyController : MonoBehaviour
         EnemySpawner _enemySpawner = FindObjectOfType<EnemySpawner>();
         if (_enemySpawner != null)
             _enemySpawner.OnEnemyKilled();
+        if (itemToDrop != null && Random.value <= dropChance)
+        {
+            Instantiate(itemToDrop, transform.position, Quaternion.identity);
+        }
         Destroy(gameObject);
     }
 }

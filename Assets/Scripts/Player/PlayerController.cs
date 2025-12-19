@@ -32,8 +32,19 @@ public class PlayerController : MonoBehaviour
     [Header("Inputs")] public InputAction moveAction;
     public InputAction attackAction;
 
-    [Header("Getters/Setters")] public int CurrentHealth => currentHealth;
+    [Header("Getters/Setters")]
     public int MaxHealth => maxHealth;
+
+    private int _bonusMaxHealth = 0;
+    private int _bonusDamage = 0;
+    private float _bonusMoveSpeedPct = 0f;
+    private float _bonusAttackSpeedPct = 0f;
+    public int CurrentHealth => currentHealth;
+    public int BonusDamage => _bonusDamage;
+    public float BonusMoveSpeedPct => _bonusMoveSpeedPct;
+    public float BonusAttackSpeedPct => _bonusAttackSpeedPct;
+
+
     public int CurrentEnergy => currentEnergy;
     public int MaxEnergy => maxEnergy;
 
@@ -194,5 +205,47 @@ public class PlayerController : MonoBehaviour
         // 5. Désactiver ce script (pour arrêter les Inputs et l'Update)
         // Cela va appeler OnDisable() qui coupe vos Inputs Actions proprement
         this.enabled = false;
+    }
+
+    public void Heal(int amount)
+    {
+        currentHealth += amount;
+        if (currentHealth > maxHealth) currentHealth = maxHealth;
+    }
+    public void UpgradeMaxHealth(int amount)
+    {
+        maxHealth += amount;
+        currentHealth += amount;
+        _bonusMaxHealth += amount;
+    }
+
+    public void UpgradeMoveSpeed(float multiplier)
+    {
+        moveSpeed *= multiplier;
+        _bonusMoveSpeedPct += (multiplier - 1f) * 100f;
+    }
+
+    public SwordController GetSword()
+    {
+        return swordController;
+    }
+
+    public void UpgradeSwordDamage(int amount)
+    {
+        if (swordController != null)
+        {
+            swordController.UpgradeDamage(amount);
+            _bonusDamage += amount;
+        }
+    }
+
+    public void UpgradeSwordAttackSpeed(float multiplier)
+    {
+        if (swordController != null)
+        {
+            swordController.UpgradeAttackSpeed(multiplier);
+            
+            _bonusAttackSpeedPct += (1f - multiplier) * 100f;
+        }
     }
 }
