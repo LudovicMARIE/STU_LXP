@@ -21,14 +21,9 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int enemiesIncreasePerWave = 1;
 
     // Buffs progressifs (raisonnables)
-    [SerializeField] private float healthMultPerWave = 1.08f;  // +8% / wave
-    [SerializeField] private float damageMultPerWave = 1.05f;  // +5% / wave
-    [SerializeField] private float speedMultPerWave  = 1.02f;  // +2% / wave
-
-    // Caps pour éviter l'insurmontable
-    [SerializeField] private float maxHealthMultCap = 3.0f;    // max x3 PV
-    [SerializeField] private float maxDamageMultCap = 2.0f;    // max x2 dmg
-    [SerializeField] private float maxSpeedMultCap  = 1.6f;    // max x1.6 speed
+    [SerializeField] private float healthMultPerWave = 1.15f;  // +15% / wave
+    [SerializeField] private float damageMultPerWave = 1.10f;  // +10% / wave
+    [SerializeField] private float speedMultPerWave  = 1.06f;  // +6% / wave
 
     
     [Header("References")]
@@ -126,11 +121,13 @@ public class EnemySpawner : MonoBehaviour
     private void ApplyWaveScaling(EnemyController enemy)
     {
         // wave 1 = pas de buff (mult = 1)
-        int w = Mathf.Max(1, currentWave);
+        int wave = Mathf.Max(1, currentWave);
 
-        float healthMult = Mathf.Min(maxHealthMultCap, Mathf.Pow(healthMultPerWave, w - 1));
-        float damageMult = Mathf.Min(maxDamageMultCap, Mathf.Pow(damageMultPerWave, w - 1));
-        float speedMult  = Mathf.Min(maxSpeedMultCap,  Mathf.Pow(speedMultPerWave,  w - 1));
+        float incrementVal = Mathf.Sqrt(wave - 1);
+        
+        float healthMult = Mathf.Pow(healthMultPerWave, incrementVal);
+        float damageMult = Mathf.Pow(damageMultPerWave, incrementVal);
+        float speedMult  = Mathf.Pow(speedMultPerWave,  incrementVal);
 
         enemy.maxHealth *= healthMult;
         enemy.damage    *= damageMult;
