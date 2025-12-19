@@ -837,9 +837,6 @@ MonoBehaviour:
   healthMultPerWave: 1.08
   damageMultPerWave: 1.05
   speedMultPerWave: 1.02
-  maxHealthMultCap: 3
-  maxDamageMultCap: 2
-  maxSpeedMultCap: 1.6
   waveText: {fileID: 1623685400}
 --- !u!4 &295330043
 Transform:
@@ -4544,8 +4541,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 144.99634, y: -191.77725}
-  m_SizeDelta: {x: 262.1927, y: 164.35419}
+  m_AnchoredPosition: {x: 299.00305, y: -191.77725}
+  m_SizeDelta: {x: 570.2062, y: 164.3542}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1533365257
 MonoBehaviour:
